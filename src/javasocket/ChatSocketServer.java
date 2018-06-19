@@ -5,11 +5,14 @@
  */
 package javasocket;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import static java.lang.String.format;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Date;
+import java.util.Scanner;
 
 /**
  *
@@ -24,16 +27,30 @@ public class ChatSocketServer {
     }
     
     public void listener() throws IOException{
+        Scanner teclado = new Scanner(System.in);
         ServerSocket listener = new ServerSocket(9090);
+        boolean responde=false;
         try {
             while (true) {
                 Socket socket = listener.accept();
-                try {
-                    PrintWriter out =
-                        new PrintWriter(socket.getOutputStream(), true);
-                    out.println(new Date().toString());
-                } finally {
-                    socket.close();
+                if (responde){
+                    System.out.print(format("%s>> ",this.user));
+                    String texto = teclado.next();
+
+                    try {
+                        PrintWriter out =
+                            new PrintWriter(socket.getOutputStream(), true);
+                        out.println(format("%s>> %s",this.user, texto));
+                    } finally {
+                        socket.close();
+                    }
+                    responde=false;
+                }else{
+                    BufferedReader input =
+                        new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    String answer = input.readLine();
+                    System.out.println(answer);
+                    responde=true;
                 }
             }
         }

@@ -7,8 +7,6 @@ package javasocket;
 
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -41,6 +39,7 @@ public class JavaSocket {
                     } catch (IOException ex) {
                         System.out.println("Falha ao conectar ao servidor: "+ex.getMessage());
                     }
+                    break;
                 }
                 case 2:{
                     System.out.println("Escutando na porta 9090");
@@ -50,6 +49,7 @@ public class JavaSocket {
                     } catch (IOException ex) {
                         System.out.println("Falha ao abrir servidor: "+ex.getMessage());
                     }
+                    break;
                 }
             }
         }
